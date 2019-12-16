@@ -7,6 +7,12 @@
    (s/optional-key :name) s/Str
    :fieldName s/Str})
 
+(s/defschema finalizingFieldAccessPostAggregator
+  "This returns the value produced by the specified aggregator."
+  {:type (s/enum :finalizingFieldAccess)
+   (s/optional-key :name) s/Str
+   :fieldName s/Str})
+
 (s/defschema constantPostAggregator
   "The constant post-aggregator always returns the specified value."
   {:type (s/enum :constant)
@@ -96,6 +102,7 @@ Offset determines the value on which those interval bins align."
   (s/conditional
    #(= :arithmetic (:type %)) arithmeticPostAggregator
    #(= :fieldAccess (:type %)) fieldAccessPostAggregator
+   #(= :finalizingFieldAccess (:type %)) finalizingFieldAccessPostAggregator
    #(= :constant (:type %)) constantPostAggregator
    #(= :javascript (:type %)) javascriptPostAggregator
    #(= :hyperUniqueCardinality (:type %)) hyperUniqueCardinalityPostAggregator
